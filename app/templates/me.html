@@ -1,39 +1,966 @@
 <html>
     <head>
-        <title>ShortNotesMD</title>
+        <title id="title">Kansei</title>
+        <script src="https://unpkg.com/phosphor-icons"></script>
+
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+:root {
+  --c-text-primary: #282a32;
+  --c-text-secondary: #686b87;
+  --c-text-action: #404089;
+  --c-accent-primary: #434ce8;
+  --c-border-primary: #eff1f6;
+  --c-background-primary: #ffffff;
+  --c-background-secondary: #fdfcff;
+  --c-background-tertiary: #ecf3fe;
+  --c-background-quaternary: #e9ecf4;
+}
+
+
+.card1{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  
+  max-width: 40ch;
+  padding: 2.5rem;
+  
+  background: #ffffff;
+  
+  border-radius: 5px;
+}
+/* balls */
+.ball {
+			border-radius: 50%;
+			position: absolute;
+			pointer-events: none;
+		}
+		.ball.small {
+			width: 16px;
+			height: 16px;
+		}
+		.ball.big {
+			width: 32px;
+			height: 32px;
+		}
+
+		.ball.yellow {background-color: #fedb40;}
+		.ball.blue {background-color: #3dbefd;}
+		.ball.purple {background-color: #7a72fc;}
+		.ball.green {background-color: #32e782;}
+		.ball.pink {background-color: #fd577f;}
+
+		div[class^="balls-"] {
+			position: absolute;
+			width: 300px;
+			height: 300px;
+			top: 100px
+		}
+
+			.balls-left {
+				left: 7%;
+			}
+
+			.balls-right {
+				right: 7%;
+				transform: rotateY(180deg);
+			}
+		/* end balls */
+
+		/* balls keyframes*/
+		@keyframes small-yellow-bounce {50% { top: 4px; }}
+		@keyframes small-green1-bounce {50% { top: 182px; }}
+		@keyframes small-green2-bounce {50% { top: 88px; }}
+		@keyframes small-pink-bounce {50% { top: 140px; }}
+		@keyframes small-purple-bounce {50% { top: 39px; }}
+		@keyframes big-blue-bounce {50% { top: 78px; }}
+		@keyframes big-yellow-bounce {50% { top: 21px; }}
+
+		.ball.small.yellow { animation: 1s small-yellow-bounce ease-in-out infinite; }
+		.ball.small.green1 { animation: .9s small-green1-bounce ease-in-out infinite; }
+		.ball.small.green2 { animation: .8s small-green2-bounce ease-in-out infinite; }
+		.ball.small.pink { animation: .9s small-pink-bounce ease-in-out infinite; }
+		.ball.small.purple { animation: .9s small-purple-bounce ease-in-out infinite; }
+		.ball.big.blue { animation: .85s big-blue-bounce ease-in-out infinite; }
+		.ball.big.yellow { animation: .85s big-yellow-bounce ease-in-out infinite; }
+		/* end balls keyframes*/
+
+		.header-bottom img {
+			max-width: 40%;
+			max-height: 380px;
+		}
+
+.design-share {
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#5aacfd+0,54ccfd+100 */
+	background: #5aacfd; /* Old browsers */
+	background: -moz-linear-gradient(-45deg, #5aacfd 0%, #54ccfd 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(-45deg, #5aacfd 0%,#54ccfd 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(135deg, #5aacfd 0%,#54ccfd 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5aacfd', endColorstr='#54ccfd',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	color: #fff;
+}
+.card1::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  z-index: -1;
+  
+  border-radius: 5px;
+  
+  background: linear-gradient(90deg, #845ec2, #d65db1, #ff6f91, #ff9671, #ffc75f, #f9f871);
+  background-size: 300% 300%;
+  background-position-x: 0%;
+  
+  animation: border-animation 5s alternate infinite;
+}
+
+
+
+@keyframes border-animation {
+  0%{
+    background-position-x: 0%;
+  }
+  100%{
+    background-position-x: 100%;
+  }
+}
+body {
+  line-height: 1.5;
+  min-height: 100vh;
+  font-family: "Be Vietnam Pro", sans-serif;
+  background-color: var(--c-background-secondary);
+  color: var(--c-text-primary);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+:focus {
+  outline: 0;
+}
+
+.responsive-wrapper {
+  width: 90%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  border-bottom: 1px solid var(--c-border-primary);
+  background-color: var(--c-background-primary);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+}
+.header-content > a {
+  display: none;
+}
+@media (max-width: 1200px) {
+  .header-content {
+    justify-content: space-between;
+  }
+  .header-content > a {
+    display: inline-flex;
+  }
+}
+
+.header-logo {
+  margin-right: 2.5rem;
+}
+.header-logo a {
+  display: flex;
+  align-items: center;
+}
+.header-logo a div {
+  flex-shrink: 0;
+  position: relative;
+}
+.header-logo a div:after {
+  display: block;
+  content: "";
+  position: absolute;
+  left: 0;
+  top: auto;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  height: 50%;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.2);
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+}
+
+.header-navigation {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: space-between;
+}
+@media (max-width: 1200px) {
+  .header-navigation {
+    display: none;
+  }
+}
+
+.header-navigation-links {
+  display: flex;
+  align-items: center;
+}
+.header-navigation-links a {
+  text-decoration: none;
+  color: var(--c-text-action);
+  font-weight: 500;
+  transition: 0.15s ease;
+}
+.header-navigation-links a + * {
+  margin-left: 1.5rem;
+}
+.header-navigation-links a:hover, .header-navigation-links a:focus {
+  color: var(--c-accent-primary);
+}
+
+.header-navigation-actions {
+  display: flex;
+  align-items: center;
+}
+.header-navigation-actions > .avatar {
+  margin-left: 0.75rem;
+}
+.header-navigation-actions > .icon-button + .icon-button {
+  margin-left: 0.25rem;
+}
+.header-navigation-actions > .button + .icon-button {
+  margin-left: 1rem;
+}
+
+.button {
+  font: inherit;
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1em;
+  margin-left:10px;
+  height: 40px;
+  border-radius: 8px;
+  line-height: 1;
+  border: 2px solid var(--c-border-primary);
+  color: var(--c-text-action);
+  font-size: 0.875rem;
+  transition: 0.15s ease;
+  background-color: var(--c-background-primary);
+}
+.button i {
+  margin-right: 0.5rem;
+  font-size: 1.25em;
+}
+.button span {
+  font-weight: 500;
+}
+.button:hover, .button:focus {
+  border-color: var(--c-accent-primary);
+  color: var(--c-accent-primary);
+}
+
+.icon-button {
+  font: inherit;
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  color: var(--c-text-action);
+  transition: 0.15s ease;
+}
+.icon-button i {
+  font-size: 1.25em;
+}
+.icon-button:focus, .icon-button:hover {
+  background-color: var(--c-background-tertiary);
+  color: var(--c-accent-primary);
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.main {
+  padding-top: 3rem;
+}
+
+.main-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.main-header h1 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+@media (max-width: 550px) {
+  .main-header h1 {
+    margin-bottom: 1rem;
+  }
+}
+
+.search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 340px;
+}
+.search input {
+  font: inherit;
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1em 0 36px;
+  height: 40px;
+  border-radius: 8px;
+  border: 2px solid var(--c-border-primary);
+  color: var(--c-text-action);
+  font-size: 0.875rem;
+  transition: 0.15s ease;
+  width: 100%;
+  line-height: 1;
+}
+.search input::-moz-placeholder {
+  color: var(--c-text-action);
+}
+.search input:-ms-input-placeholder {
+  color: var(--c-text-action);
+}
+.search input::placeholder {
+  color: var(--c-text-action);
+}
+.search input:focus, .search input:hover {
+  border-color: var(--c-accent-primary);
+}
+.search button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background-color: transparent;
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.25em;
+  color: var(--c-text-action);
+  padding: 0;
+  height: 40px;
+}
+
+.horizontal-tabs {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+}
+@media (max-width: 1000px) {
+  .horizontal-tabs {
+    scrollbar-width: none;
+    position: relative;
+  }
+  .horizontal-tabs::-webkit-scrollbar {
+    display: none;
+  }
+}
+.horizontal-tabs a {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  height: 48px;
+  padding: 0 0.25rem;
+  font-weight: 500;
+  color: inherit;
+  border-bottom: 3px solid transparent;
+  text-decoration: none;
+  transition: 0.15s ease;
+}
+.horizontal-tabs a:hover, .horizontal-tabs a:focus, .horizontal-tabs a.active {
+  color: var(--c-accent-primary);
+  border-bottom-color: var(--c-accent-primary);
+}
+.horizontal-tabs a + * {
+  margin-left: 1rem;
+}
+
+.content-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 3rem;
+  margin-top: -1px;
+  border-top: 1px solid var(--c-border-primary);
+}
+
+.content-header-intro h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.content-header-intro p {
+  color: var(--c-text-secondary);
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 800px) {
+  .content-header-actions a:first-child {
+    display: none;
+  }
+}
+
+.content {
+  border-top: 1px solid var(--c-border-primary);
+  margin-top: 2rem;
+  display: flex;
+  align-items: flex-start;
+}
+
+.content-panel {
+  display: none;
+  max-width: 280px;
+  width: 25%;
+  padding: 2rem 1rem 2rem 0;
+  margin-right: 3rem;
+}
+@media (min-width: 800px) {
+  .content-panel {
+    display: block;
+  }
+}
+
+.vertical-tabs {
+  display: flex;
+  flex-direction: column;
+}
+.vertical-tabs a {
+  display: flex;
+  align-items: center;
+  padding: 0.75em 1em;
+  background-color: transparent;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  color: var(--c-text-action);
+  transition: 0.15s ease;
+}
+.vertical-tabs a:hover, .vertical-tabs a:focus, .vertical-tabs a.active {
+  background-color: var(--c-background-tertiary);
+  color: var(--c-accent-primary);
+}
+.vertical-tabs a + * {
+  margin-top: 0.25rem;
+}
+
+.content-main {
+  padding-top: 2rem;
+  padding-bottom: 6rem;
+  flex-grow: 1;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  -moz-column-gap: 1.5rem;
+       column-gap: 1.5rem;
+  row-gap: 1.5rem;
+}
+@media (min-width: 600px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1200px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  background-color: var(--c-background-primary);
+  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.05), 0 5px 15px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1.5rem 1.25rem 1rem 1.25rem;
+}
+.card-header div {
+  display: flex;
+  align-items: center;
+}
+.card-header div span {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-header div span img {
+  max-height: 100%;
+}
+.card-header div h3 {
+  margin-left: 0.75rem;
+  font-weight: 500;
+}
+
+.toggle span {
+  display: block;
+  width: 40px;
+  height: 24px;
+  border-radius: 99em;
+  background-color: var(--c-background-quaternary);
+  box-shadow: inset 1px 1px 1px 0 rgba(0, 0, 0, 0.05);
+  position: relative;
+  transition: 0.15s ease;
+}
+
+.toggle span:before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  height: 18px;
+  width: 18px;
+  background-color: var(--c-background-primary);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+  transition: 0.15s ease;
+}
+.toggle input {
+  clip: rect(0 0 0 0);
+  -webkit-clip-path: inset(50%);
+          clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+.toggle input:checked + span {
+  background-color: var(--c-accent-primary);
+}
+.toggle input:checked + span:before {
+  transform: translateX(calc(100% - 2px));
+}
+.toggle input:focus + span {
+  box-shadow: 0 0 0 4px var(--c-background-tertiary);
+}
+
+.card-body {
+  padding: 1rem 1.25rem;
+  font-size: 0.875rem;
+}
+
+/* styles.css */
+.custom-upload-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.custom-upload-button:hover {
+    background-color: #2980b9;
+}
+
+/* Hide the default file input */
+input[type="file"] {
+    display: none;
+}
+
+.card-footer {
+  margin-top: auto;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-top: 1px solid var(--c-border-primary);
+}
+.card-footer a {
+  color: var(--c-text-action);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+html::-webkit-scrollbar {
+  width: 12px;
+}
+html::-webkit-scrollbar-thumb {
+  background-color: var(--c-text-primary);
+  border: 4px solid var(--c-background-primary);
+  border-radius: 99em;
+}
+
+
+.button2 {
+  position: relative;
+  border: none;
+  padding: 1rem 3rem;
+  margin: 1rem;
+  border-radius: 99999px;
+  font-size: 1.5rem;
+  text-align: center; /* Center-align the text */
+  font-weight: 700;
+  font-family: "Poppins", sans-serif;
+  transition: 0.2s all;
+  transition-timing-function: ease;
+}
+
+.button2:hover {
+  transform: translateY(3px);
+}
+
+.button2:focus {
+  outline: none;
+}
+
+.button2.teal {
+  background-color: #02C4D9;
+  box-shadow: 0 7px 50px rgba(2, 196, 217, 0.5);
+  color: #FFFFFF;
+}
+
+.button2.teal:hover {
+  box-shadow: 0 2px 10px rgba(2, 196, 217, 0.5);
+}
+
+.button2.google {
+  background-color: #FFFFFF;
+  box-shadow: 0 3px 20px rgba(39, 68, 74, 0.2);
+  color: #506569;
+  position: relative;
+  
+  background-image: url('https://cdn-icons-png.flaticon.com/512/1251/1251829.png');
+  background-size: 25px; /* Set the size of the icon */
+  background-position: 10px center; /* Adjust the position of the icon */
+  background-repeat: no-repeat;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1rem;
+}
+
+.button2.google > img {
+  height: 25px;
+  width: 25px;
+}
+
+.button2.google:hover {
+  box-shadow: 0 1px 5px rgba(39, 68, 74, 0.2);
+}
+
+.button1 {
+  position: relative;
+  border: none;
+  padding: 1rem 3rem;
+  margin: 1rem;
+  border-radius: 99999px;
+  font-size: 1.5rem;
+  text-align: center; /* Center-align the text */
+
+  font-weight: 700;
+  font-family: "Poppins", sans-serif;
+  transition: 0.2s all;
+  transition-timing-function: ease;
+}
+.button1:hover {
+  transform: translatey(3px);
+}
+.button1:focus {
+  outline: none;
+}
+.button1.teal {
+  background-color: #02C4D9;
+  box-shadow: 0 7px 50px rgba(2, 196, 217, 0.5);
+  color: #FFFFFF;
+}
+.button1.teal:hover {
+  box-shadow: 0 2px 10px rgba(2, 196, 217, 0.5);
+}
+.button1.google {
+  background-color: #FFFFFF;
+  box-shadow: 0 3px 20px rgba(39, 68, 74, 0.2);
+  color: #506569;
+  position: relative;
+  
+  background-image: url('https://i.ibb.co/L60Fq1f/mNxcSsw.png');
+  background-size: 25px; /* Set the size of the icon */
+  background-position: 10px center; /* Adjust the position of the icon */
+  background-repeat: no-repeat;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1rem;
+}
+.button1.google > img {
+  height: 25px;
+  width: 25px;
+}
+.button1.google:hover {
+  box-shadow: 0 1px 5px rgba(39, 68, 74, 0.2);
+}
+
+.test{
+    display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        margin-bottom:10px;
+        background-color: white;
+        border: 1px solid #ccc; 
+
+}
+.container {
+    backdrop-filter: blur(10px); /* Apply the blur effect */
+    border-radius: 10px; /* Add some border radius for the glass effect */
+    padding: 20px;
+    
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: transparent;
+    border-radius: 10px; /* Adding rounded corners */
+    overflow: hidden; /* Hide overflowing content */
+    
+    margin-bottom:40px;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.13);
+}
+
+th, td {
+    padding: 20px;
+    text-align: left;
+    border-bottom: 1px solid #cccccc86;
+    background-color: #fff; /* White background */
+}
+
+th {
+    background-color: #f2f2f2;
+    border-top-left-radius: 20px; /* Rounded top left corner for header cell */
+    border-top-right-radius: 20px; /* Rounded top right corner for header cell */
+}
+
+tr:hover {
+    background-color: #f0d3d3;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+
+
+
+    .btn {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #2a2f35;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 50px;
+    }
+
+    .btn:hover {
+        background-color: #101a25;
+    }
+.pill {
+    display: inline-block;
+    padding: 5px 15px; /* Adjust padding as needed */
+    background-color: #007bff; /* Set the background color */
+    color: #fff; /* Set text color */
+    border-radius: 50px; /* Create rounded edges to make it pill-shaped */
+}
+
+
+
+        </style>
     </head>
 
-    <body>
-        <h1 id="loading"> LOADING </h1>
+
+
+
+
+    <header class="header">
+        <div class="header-content responsive-wrapper">
+            <div class="header-logo">
+
+                 
+                    <p id="name"></p>
+                
+            </div>
+            <div class="header-navigation">
+               <nav class="header-navigation-links">
+                 
+                </nav> 
+                <div class="header-navigation-actions">
+                 
+                    <a href="#" class="icon-button">
+                        <i class="ph-gear-bold"></i>
+                    </a>
+                    <a href="#" class="icon-button">
+                        <i class="ph-bell-bold"></i>
+                    </a>
+                    <a href="#" class="avatar">
+                        <img id="profileimg"></img>
+                    </a>
+                </div>
+            </div>
+            <a href="#" class="button">
+                <i class="ph-list-bold"></i>
+                <span>Menu</span>
+            </a>
+        </div>
+    </header>
+    <main class="main">
+        <div class="responsive-wrapper">
+            <div class="main-header">
+              
+           
+            </div>
+     
+            <form  id='form' hx-encoding='multipart/form-data', hx-headers="" hx-post='/upload' hx-target="#response">
+            <div class="main-header">
+                <div class="content-header-intro">
+                    <h1>KanseiMind -<br>Uncover Wisdom, Illuminate Learning...</h1>
+                    <p style="font-size: 15px; overflow-wrap: break-word; word-wrap: break-word;">KanseiMind is not just another memory app<br>
+                        it's a tool designed to elevate your learning and retention experience.<br>
+                        Dive into Deeper Understanding with Tsukasa's Summarization and Inquiry Tools<br>
+                        With its seamless integration of Markdown (.md) files and intelligent question generation<br>
+                        It empowers you to effortlessly remember and recall information like never before.
+                    </p><div class="content-header"></div>
+                    <button id="get-notes" hx-get="/me/notes" hx-swap="innerHTML" hx-target="#notes" hx-headers="" class="button1 google flex justify-center align-center" >
+                    
+                       &nbsp;&nbsp; Show Saved Notes
+                    </button><button onclick="logout()" class="button2 google flex justify-center align-center" >
+                    
+                        &nbsp;&nbsp; Logout
+                    </button>
+                    
+                   
+             
+                
+                </div>
+                <div>    <div class="balls-right">
+    
+                    
+                   
+                    <div class="ball small pink" style="top: 134px;left: 189px;"></div>
+                    <div class="ball small purple" style="top: 32px;left: 150px;"></div>
+                   
+                    <div class="ball big yellow" style="top: 13px;left: 200px;"></div>
+    
+                </div>
+                    <div class="card1">
+                        <h2>Get Started..</h2>
+                        <input  type='file' name='file' id="file" accept=".md">
+                <label for="file" class="custom-upload-button"><i class="ph-lightning-bold"></i> Choose File to Upload</label>
+                        <p>Upload your custom .md files and generate a wide range of questionnaire.<br><div class="content-header"><b>Note - Upload only .md Files</b></p>
+                        <button class="button" onclick="subbtnclick()">
+                    
+                            <i class="ph-cloud-arrow-up"></i>Upload
+                        </button>
+                        <progress id='progress' value='0' max='100'></progress>
+                      </div>
+
+                      </div>
+                    
+                    
+                </div>
+            </div>
+
+
+          
+            
+            
+            
+             
+    
+               
+    
+            
+      
+                
+               <!-- <progress id='progress' value='0' max='100'></progress> -->
+            </form><br>
+            <div class="header1"></div>
+                
+                <h1 id="loading"> LOADING </h1>
         <div id="main" hidden="hidden">
-            <h2>Name: </h2>
-            <p id="name"></p>
-            <img id="profileimg"></img>
-            <button onclick="logout()">Logout</button>
-            <h2>Upload your file</h2>
-            <form id='form' hx-encoding='multipart/form-data', hx-headers="" hx-post='/upload' hx-target="#response">
-                <input type='file' name='file' id="file" accept=".md">
-                <button onclick="subbtnclick()">
-                    Upload
-                </button>
-                <progress id='progress' value='0' max='100'></progress>
-            </form>
-            <div id="response">
+          
+         
+            <div  id="response">
                 <!-- post request respomse html supposed to be filled here bitch shut the duck up pussy hair no balls -->
             </div>
-            <button id="get-notes" hx-get="/me/notes" hx-swap="innerHTML" hx-target="#notes" hx-headers="">
-                show notes
-            </button>
+         
             <div id="notes">
                 <!-- notes cards html supposed to be filled here bitch shut the duck up pussy hair no balls -->
             </div>
 
         </div>
-        
-    </body>
+               
+                <div class="content-header-actions">
+                    <a href="#" class="button">
+                        <i class="ph-faders-bold"></i>
+                        <span>Filters</span>
+                    </a>
+                  <!-- <a href="#" class="button">
+                        <i class="ph-plus-bold"></i>
+                        
+                    </a> -->
+                    
+                </div>
+            
+            
+        </div>
+    </main>
+
+
+
+
     <script src="https://unpkg.com/htmx.org@1.9.4" integrity="sha384-zUfuhFKKZCbHTY6aRR46gxiqszMk5tcHjsVFxnUo8VMus4kHGVdIYVbOYYNlKmHV" crossorigin="anonymous"></script>
     <script>
-        BASE_URL = 'http://127.0.0.1:8000/'
+        BASE_URL = 'https://kanseii.vercel.app/'
         let params = {}
         let regex = /([^&=]+)=([^&]*)/g, m
         while (m = regex.exec(location.href)){
@@ -50,7 +977,7 @@
             headers:{ 'Content-type':'application/x-www-form-url'}
         })
         .then((data)=>{
-            location.href = '/login' + "?error=logoutsuccess"
+            location.href = '/login' + "?error=Succesfully Logged Out"
             localStorage.removeItem('authitem')
         })
         }
@@ -82,6 +1009,7 @@
             a.remove()
             b.removeAttribute("hidden")
             document.getElementById("name").innerHTML = parsed_data["name"]
+            document.getElementById("title").innerHTML += " - " +  parsed_data["name"]
             document.getElementById('profileimg').setAttribute('src',parsed_data["picture"])
             localStorage.setItem("userdata", responseJson)
             //set get notes request header

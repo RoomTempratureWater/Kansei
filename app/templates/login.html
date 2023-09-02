@@ -1,15 +1,266 @@
 <html>
     <head>
-        <title>Login into your account</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" crossorigin="anonymous"></script>
+        <style>
+@import url("https://fonts.googleapis.com/css?family=Montserrat:200,300,400,600");
+.more-pens {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 10;
+}
+.pill {
+    display: inline-block;
+    
+    padding: 5px 15px; /* Adjust padding as needed */
+    background-color: #eb6a61; /* Set the background color */
+    color: #fff; /* Set text color */
+    border-radius: 50px; /* Create rounded edges to make it pill-shaped */
+}
+
+.button {
+  position: relative;
+  border: none;
+  padding: 1rem 3rem;
+  margin: 1rem;
+  border-radius: 99999px;
+  font-size: 1.5rem;
+  text-align: center; /* Center-align the text */
+
+  font-weight: 700;
+  font-family: "Poppins", sans-serif;
+  transition: 0.2s all;
+  transition-timing-function: ease;
+}
+.button:hover {
+  transform: translatey(3px);
+}
+.button:focus {
+  outline: none;
+}
+.button.teal {
+  background-color: #02C4D9;
+  box-shadow: 0 7px 50px rgba(2, 196, 217, 0.5);
+  color: #FFFFFF;
+}
+.button.teal:hover {
+  box-shadow: 0 2px 10px rgba(2, 196, 217, 0.5);
+}
+.button.google {
+  background-color: #FFFFFF;
+  box-shadow: 0 3px 20px rgba(39, 68, 74, 0.2);
+  color: #506569;
+  position: relative;
+  
+  background-image: url('https://www.transparentpng.com/thumb/google-logo/google-logo-png-icon-free-download-SUF63j.png');
+  background-size: 25px; /* Set the size of the icon */
+  background-position: 10px center; /* Adjust the position of the icon */
+  background-repeat: no-repeat;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1rem;
+}
+.button.google > img {
+  height: 25px;
+  width: 25px;
+}
+.button.google:hover {
+  box-shadow: 0 1px 5px rgba(39, 68, 74, 0.2);
+}
+
+a.white-mode, a.white-mode:link, a.white-mode:visited, a.white-mode:active {
+  font-family: "Montserrat";
+  font-size: 12px;
+  text-decoration: none;
+  background: #212121;
+  padding: 4px 8px;
+  color: #f7f7f7;
+}
+a.white-mode:hover, a.white-mode:link:hover, a.white-mode:visited:hover, a.white-mode:active:hover {
+  background: #edf3f8;
+  color: #212121;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#particles {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  filter: url("#goo");
+}
+
+.background {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #edf3f8;
+}
+
+.title {
+  z-index: 10;
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  transform: translateX(-50%) translateY(-50%);
+  font-family: "Montserrat";
+  text-align: center;
+  width: 60%;
+}
+.title h1 {
+  position: relative;
+  color: #000000;
+  font-weight: 300;
+  font-size: 60px;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+.title h1 span {
+  font-weight: 600;
+  font-size: 60px;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+.title h3 {
+  font-weight: 200;
+  font-size: 20px;
+  padding: 0;
+  margin: 0;
+  line-height: 2;
+  color: #4c5e6e;
+  letter-spacing: 2px;
+}
+
+.circle {
+  fill: #3E82F7;
+}
+
+svg {
+  display: block;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  transform: translateZ(0px);
+}
+        </style>
+      
+
+
+        <title>Kansei - Login</title>
+        <!--<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"> -->
+        <link rel="stylesheet" type="text/css" href="">
     </head>
 
-    <body>
-        <p id="error-box">{{error}}</p>
-        <h1>Google Login</h1>
-        <button onclick="signin()">Login</button>
-    </body>
     <script src="https://unpkg.com/htmx.org@1.9.4" integrity="sha384-zUfuhFKKZCbHTY6aRR46gxiqszMk5tcHjsVFxnUo8VMus4kHGVdIYVbOYYNlKmHV" crossorigin="anonymous"></script>
     
+
+    <div id="particles"></div>
+    <div class="background"></div>
+    <div class="title">
+        <p class="pill" id="error-box">{{error}}</p>
+      <h3>Harvesting Insights, Nurturing Questions – Your Personal Note Summarizer and Question Generator.</h3>
+      <h1>Kansei<span>Mind</span></h1>
+     
+      <button onclick="signin()" class="button google flex justify-center align-center"> &nbsp;&nbsp; Login with Google</button>
+    </div>
+    
+  
+
+<script>
+    const circle = '<svg viewBox="0 0 67.4 67.4"><circle class="circle" cx="33.7" cy="33.7" r="33.7"/></svg>';
+
+class Particle {
+
+  constructor(svg, coordinates, friction) {
+    this.svg = svg;
+    this.steps = $(window).height() / 2;
+    this.item = null;
+    this.friction = friction;
+    this.coordinates = coordinates;
+    this.position = this.coordinates.y;
+    this.dimensions = this.render();
+    this.move();
+    this.rotation = Math.random() > 0.5 ? "-" : "+";
+    this.scale = 0.4 + Math.random() * 2;
+    this.siner = $(window).width() / 2.5 * Math.random();
+  }
+  destroy() {
+    this.item.remove();
+  }
+
+  move() {
+    this.position = this.position - this.friction;
+    let top = this.position;
+    let left = this.coordinates.x + Math.sin(this.position * Math.PI / this.steps) * this.siner;
+    this.item.css({
+      transform: "translateX(" + left + "px) translateY(" + top + "px) scale(" + this.scale + ") rotate(" + this.rotation + (this.position + this.dimensions.height) + "deg)" });
+
+
+    if (this.position < -this.dimensions.height) {
+      this.destroy();
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  render() {
+    this.item = $(this.svg, {
+      css: {
+        transform: "translateX(" + this.coordinates.x + "px) translateY(" + this.coordinates.y + "px)" } });
+
+
+    $("#particles").append(this.item);
+    return {
+      width: this.item.width(),
+      height: this.item.height() };
+
+  }}
+
+
+
+let isPaused = false;
+window.onblur = function () {
+  isPaused = true;
+}.bind(this);
+window.onfocus = function () {
+  isPaused = false;
+}.bind(this);
+
+//-------------------------------
+let particles = [];
+
+setInterval(function () {
+  if (!isPaused) {
+    particles.push(
+    new Particle(circle, {
+      "x": Math.random() * $(window).width(),
+      "y": $(window).height() + 100 },
+    1 + Math.random()));
+
+  }
+}, 180);
+
+function update() {
+  particles = particles.filter(function (p) {
+    return p.move();
+  });
+  requestAnimationFrame(update.bind(this));
+}
+update();
+</script>
+
     
     <script>
         function signin(){
@@ -20,7 +271,7 @@
 
             let params = {
                 "client_id": "115546941678-7eioaonfjf5pbcep38no7rc4bre6ablj.apps.googleusercontent.com",
-                "redirect_uri": "http://127.0.0.1:8000/me",
+                "redirect_uri": "https://kanseii.vercel.app/me",
                 "response_type": "token",
                 "scope":"https://www.googleapis.com/auth/userinfo.profile",
                 "include_granted_scopes": 'true',
