@@ -1,23 +1,267 @@
-<html>
-    <head>
-        <title>
-            {{ name }}
-        </title>
-    </head>
-    <body>
-        <h1>Note View</h1>
-        <div>
-            {%for heading in note%}
-                <h1> {{heading}} </h1>
-                    <h3>summary</h3>
-                        <p>{{ note[heading]['summary'] }}</p>
-                    {%for question in note[heading]['questions']%}
-                    <p>Question : {{question}}</p>
-                    {% endfor %}
-            {% endfor %}
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
-    </body>
+    <style>
+        /* Add this CSS to your <style> section */
+/* Custom scrollbar style */
+body::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+    background-color: transparent; /* Background color of the scrollbar track */
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #3B82F6; /* Color of the scrollbar thumb */
+    border-radius: 6px; /* Radius of the scrollbar thumb */
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background-color: #2563EB; /* Color of the scrollbar thumb on hover */
+}
+
+/* Apply custom style to the content container */
+.note-card {
+    scrollbar-color: #3B82F6 transparent; /* Scrollbar color (thumb track) */
+    scrollbar-width: thin; /* Width of the scrollbar */
+}
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            position: relative;
+            background-color: #111827;
+        }
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .animated-text {
+            animation: fadeInDown 1s ease-in-out;
+        }
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .note-card {
+            background-color: rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            color: white;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .summary-tag {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: white;
+            border-radius: 20px;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        .question-tag {
+            background-color: #3B82F6;
+            color: white;
+            border-radius: 20px;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .question-tag svg {
+            height: 0.75rem;
+            width: 0.75rem;
+            margin-right: 0.25rem;
+        }
+    </style>
+    <title>{{ name }}</title>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <header class="text-center py-10">
+        <h1 class="text-4xl font-extrabold animated-text relative z-10 text-white" id="headerText">
+            Note View
+        </h1>
+    </header>
+    
+    
+    <div class="max-w-3xl mx-auto px-4">
+        {% for heading in note %}
+            <div class="note-card">
+                <h2 class="section-title mb-2">
+                    {{ heading }}
+                </h2>
+                <div class="summary-tag">
+                    Summary
+                </div>
+                <p class="text-sm text-gray-400 leading-relaxed mb-4">{{ note[heading]['summary'] }}</p>
+                <div class="flex flex-wrap gap-2">
+                    {% for question in note[heading]['questions'] %}
+                        <div class="question-tag" onclick="googleQuestion('{{ question }}')">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-5.2-5.2"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a6 6 0 11-12 0 6 6 0 0112 0z"/>
+                            </svg>
+                            {{ question }}
+                        </div>
+                    {% endfor %}
+                </div>
+        
+            </div>
+        {% endfor %}
+    </div>
+</body>
+<script>
+    function googleQuestion(question) {
+        const searchQuery = 'https://www.google.com/search?q=' + encodeURIComponent(question);
+        window.open(searchQuery, '_blank');
+    }
+</script>
+<script>
+    // Extract the number from the URL
+    const url = window.location.href;
+    const numberMatch = url.match(/\/(\d+)$/);
+    const number = numberMatch ? numberMatch[1] : '';
+
+    // Update the header text
+    const headerText = document.getElementById('headerText');
+    if (number !== '') {
+        headerText.innerText = `Note View #${number}`;
+    }
+</script>
+
+    <script>
+        particlesJS("particles-js", {
+            particles: {
+                number: {
+                    value: 50,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: "#000"
+                },
+                shape: {
+                    type: "circle",
+                    stroke: {
+                        width: 0,
+                        color: "#000000"
+                    },
+                    polygon: {
+                        nb_sides: 5
+                    }
+                },
+                opacity: {
+                    value: 0.5,
+                    random: false,
+                    anim: {
+                        enable: false,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 2,
+                    random: true,
+                    anim: {
+                        enable: false,
+                        speed: 40,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#fff",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 6,
+                    direction: "none",
+                    random: false,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false,
+                    attract: {
+                        enable: false,
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: "repulse"
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: "push"
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 400,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    bubble: {
+                        distance: 400,
+                        size: 40,
+                        duration: 2,
+                        opacity: 8,
+                        speed: 3
+                    },
+                    repulse: {
+                        distance: 100
+                    },
+                    push: {
+                        particles_nb: 4
+                    },
+                    remove: {
+                        particles_nb: 2
+                    }
+                }
+            },
+            retina_detect: true
+        });
+    </script>
+    
     <script>
         document.addEventListener("DOMContentLoaded", () => loader());
         function loader(){

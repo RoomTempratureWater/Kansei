@@ -1,15 +1,49 @@
 <html>
     <head>
+        <style>
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+        
+            th, td {
+                padding: 10px;
+                text-align: left;
+                border-bottom: 1px solid #ccc;
+            }
+        
+            th {
+                background-color: #f2f2f2;
+            }
+        
+            .btn {
+                display: inline-block;
+                padding: 8px 16px;
+                background-color: #007bff;
+                color: #fff;
+                text-decoration: none;
+                border-radius: 4px;
+            }
+        
+            .btn:hover {
+                background-color: #eb7171;
+            }
+            
+        </style>
+        
         <title>
            {{name}}
         </title>
     </head>
     <body>
-        <h1>Notes View</h1>
+        <h1>Here are your saved notes -</h1>
+ 
+<table>
         {%for note in notes%}
             <tr>
-                <td>{{note["Name"]}}</td>
-                <td>Created at: {{note["created_at"]}}</td>
+                <td><b><div class="test">📁 File Name</div></b> <br>{{note["Name"]}}</td>
+                <td><b><div class="test">⌛ Creation Time</div></b> <br> {{note["created_at"]}}</td>
                 <td>
                     <div hx-boost="true">
                     <a class="btn btn-primary" hx-headers="{{note['sub']}}"
@@ -20,7 +54,7 @@
                 </td>
             </tr>
             {%endfor%}
-
+        </table>
     </body>
     <script>
 
