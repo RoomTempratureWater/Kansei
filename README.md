@@ -43,6 +43,8 @@ you can refer to this [tutorial](https://www.youtube.com/watch?v=OKMgyF5ezFs).
 
 the client id and redirect uri should be changed in the params field in the ```login.html``` file in ```app/templates```.
 
+### Huggingface
+the models required for the summarizing and question generating are on Huggingface and you will need a api key to accesss it, you have to update your key in the environments variables mentioned below.
 
 ### Python
 Change
@@ -78,6 +80,7 @@ To run this project, you will need to add the following environment variables to
 ```
 SUPABASE_URL= "your.supabase.url"
 SUPABASE_KEY = "your.supabase.key"
+HF = "your.huggingface.api.key"
 ```
 the ```.env``` file should be inside of ```app/```
 ## Features
