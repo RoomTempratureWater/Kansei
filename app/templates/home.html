@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>
+            rada website
+        </title>
+    </head>
+
+    <body>
+        <h1>euuuuuuw!</h1>
+        <p> majha nav {{ name }}</p>
+        <p id="loading">
+            loading!
+        </p>
+        <a href="/me">Your Notes</a>
+    </body>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => loader());
+        function loader(){
+            document.getElementById("loading").innerHTML = "loaded!";
+            const tok = localStorage.getItem("authitem");
+            //console.log(tok);
+            if (!tok){
+                window.location.assign("/login");
+            }
+        };
+    </script>
+</html>

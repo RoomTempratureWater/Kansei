@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>
+           {{name}}
+        </title>
+    </head>
+    <body>
+        <h1>Notes View</h1>
+        {%for note in notes%}
+            <tr>
+                <td>{{note["Name"]}}</td>
+                <td>Created at: {{note["created_at"]}}</td>
+                <td>
+                    <div hx-boost="true">
+                    <a class="btn btn-primary" hx-headers="{{note['sub']}}"
+                        href="/get-note/{{note['id']}}" target="_blank" rel="noopener noreferrer">
+                        Open Note
+                    </a>
+                    </div>
+                </td>
+            </tr>
+            {%endfor%}
+
+    </body>
+    <script>
+
+    </script>
+</html>

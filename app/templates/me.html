@@ -1,0 +1,134 @@
+<html>
+    <head>
+        <title>ShortNotesMD</title>
+    </head>
+
+    <body>
+        <h1 id="loading"> LOADING </h1>
+        <div id="main" hidden="hidden">
+            <h2>Name: </h2>
+            <p id="name"></p>
+            <img id="profileimg"></img>
+            <button onclick="logout()">Logout</button>
+            <h2>Upload your file</h2>
+            <form id='form' hx-encoding='multipart/form-data', hx-headers="" hx-post='/upload' hx-target="#response">
+                <input type='file' name='file' id="file" accept=".md">
+                <button onclick="subbtnclick()">
+                    Upload
+                </button>
+                <progress id='progress' value='0' max='100'></progress>
+            </form>
+            <div id="response">
+                <!-- post request respomse html supposed to be filled here bitch shut the duck up pussy hair no balls -->
+            </div>
+            <button id="get-notes" hx-get="/me/notes" hx-swap="innerHTML" hx-target="#notes" hx-headers="">
+                show notes
+            </button>
+            <div id="notes">
+                <!-- notes cards html supposed to be filled here bitch shut the duck up pussy hair no balls -->
+            </div>
+
+        </div>
+        
+    </body>
+    <script src="https://unpkg.com/htmx.org@1.9.4" integrity="sha384-zUfuhFKKZCbHTY6aRR46gxiqszMk5tcHjsVFxnUo8VMus4kHGVdIYVbOYYNlKmHV" crossorigin="anonymous"></script>
+    <script>
+        BASE_URL = 'http://127.0.0.1:8000/'
+        let params = {}
+        let regex = /([^&=]+)=([^&]*)/g, m
+        while (m = regex.exec(location.href)){
+            params[decodeURIComponent(m[1])] = decodeURIComponent(m[2])
+        }
+        if(Object.keys(params).length > 0){
+            localStorage.setItem('authitem', JSON.stringify(params))
+        }
+
+        window.history.pushState({}, document.title, '/' + "me")
+        let info = JSON.parse(localStorage.getItem('authitem'))
+        function logout(){
+            fetch("https://oauth2.googleapis.com/revoke?token=" + info['access_token'], {method:'POST',
+            headers:{ 'Content-type':'application/x-www-form-url'}
+        })
+        .then((data)=>{
+            location.href = '/login' + "?error=logoutsuccess"
+            localStorage.removeItem('authitem')
+        })
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => loader());
+        function loader(){
+            const tok = localStorage.getItem("authitem");
+            //console.log(tok);
+            if (!tok){
+                window.location.assign("/login" + "?error=loginexp");
+            }
+            let p_tok = JSON.parse(tok)
+            fetch(BASE_URL + "getinfo/" + p_tok["access_token"]).then((response) => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Something went wrong');
+            })
+            .then((responseJson) => {
+            // Do something with the response
+            //console.log(responseJson)
+            parsed_data = JSON.parse(responseJson)
+            if ('error' in parsed_data){
+                window.location.assign("/login" + "?error=loginexp");
+            }
+            let a = document.getElementById("loading")
+            let b = document.getElementById("main")
+            a.remove()
+            b.removeAttribute("hidden")
+            document.getElementById("name").innerHTML = parsed_data["name"]
+            document.getElementById('profileimg').setAttribute('src',parsed_data["picture"])
+            localStorage.setItem("userdata", responseJson)
+            //set get notes request header
+            let c = document.getElementById('get-notes')
+            c.setAttribute('hx-headers', JSON.stringify({"sub" : parsed_data["sub"]}))
+            })
+            .catch((error) => {
+                window.location.assign("/login" + "?error=loginexp");
+                console.log(error)
+            });
+        };
+        </script>
+        <script>
+            function hasExtension(inputID, exts) {
+                var fileName = document.getElementById(inputID).value;
+                let a =  (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
+                if(!a){
+                    alert("only .md files allowed")
+                    return false
+                }
+                return true
+            }
+            htmx.on('#form', 'htmx:xhr:progress', function(evt) {
+                var prog = evt.detail.loaded/evt.detail.total * 100
+                htmx.find('#progress').setAttribute('value', prog)
+                if (prog == 100){
+                    //var a = JSON.parse(localStorage.getItem("userdata"))
+                    //let b = document.getElementById('form')
+                    //b.setAttribute('hx-headers', JSON.stringify({"sub" : a["sub"]})) 
+                    //console.log({"sub" : localStorage.getItem('userdata')["sub"]}) 
+                }   
+                
+            });
+            
+
+            function getjsonhead(){
+                var a = {"sub": localStorage.getItem('userdata')["sub"]}
+                return JSON.stringify(a)
+            }
+
+            function subbtnclick(){
+                if(!hasExtension('file', ['.md'])){
+                    htmx.trigger('#form', 'htmx:abort')
+                }
+                var a = JSON.parse(localStorage.getItem("userdata"))
+                let b = document.getElementById('form')
+                b.setAttribute('hx-headers', JSON.stringify({"sub" : a["sub"]}))
+            }
+        </script>
+</html>

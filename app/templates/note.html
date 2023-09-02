@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <title>
+            {{ name }}
+        </title>
+    </head>
+    <body>
+        <h1>Note View</h1>
+        <div>
+            {%for heading in note%}
+                <h1> {{heading}} </h1>
+                    <h3>summary</h3>
+                        <p>{{ note[heading]['summary'] }}</p>
+                    {%for question in note[heading]['questions']%}
+                    <p>Question : {{question}}</p>
+                    {% endfor %}
+            {% endfor %}
+        </div>
+
+    </body>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => loader());
+        function loader(){
+            const tok = localStorage.getItem("authitem");
+            //console.log(tok);
+            if (!tok){
+                window.location.assign("/login" + "?error=loginexp");
+            }
+            let p_tok = JSON.parse(tok)
+            fetch(BASE_URL + "getinfo/" + p_tok["access_token"]).then((response) => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Something went wrong');
+            })
+            .then((responseJson) => {
+            // Do something with the response
+            //console.log(responseJson)
+            parsed_data = JSON.parse(responseJson)
+            if ('error' in parsed_data){
+                window.location.assign("/login" + "?error=loginexp");
+            }
+        })
+        .catch((error) => {
+                window.location.assign("/login" + "?error=loginexp");
+                console.log(error)
+            });
+        }
+    </script>
+</html>

@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>Login into your account</title>
+    </head>
+
+    <body>
+        <p id="error-box">{{error}}</p>
+        <h1>Google Login</h1>
+        <button onclick="signin()">Login</button>
+    </body>
+    <script src="https://unpkg.com/htmx.org@1.9.4" integrity="sha384-zUfuhFKKZCbHTY6aRR46gxiqszMk5tcHjsVFxnUo8VMus4kHGVdIYVbOYYNlKmHV" crossorigin="anonymous"></script>
+    
+    
+    <script>
+        function signin(){
+            let ouath2ep = "https://accounts.google.com/o/oauth2/v2/auth"
+            let form = document.createElement("form")
+            form.setAttribute('method', 'GET')
+
+
+            let params = {
+                "client_id": "115546941678-7eioaonfjf5pbcep38no7rc4bre6ablj.apps.googleusercontent.com",
+                "redirect_uri": "http://127.0.0.1:8000/me",
+                "response_type": "token",
+                "scope":"https://www.googleapis.com/auth/userinfo.profile",
+                "include_granted_scopes": 'true',
+                "state": 'pass-through-value'   
+            }
+            let a = 0
+            let c = ''
+            for (var p in params){
+                let input = document.createElement('inp')
+                input.setAttribute('type', 'hidden')
+                input.setAttribute('name', p)
+                //input.setAttribute('value',params[p])
+                //console.log(inp, p , params[p])
+                if(a==0){
+                    c = '?'
+                }
+                else{
+                    c = '&'
+                }
+                ouath2ep = ouath2ep + c + p + "=" + params[p]
+                a = a+1
+                //form.appendChild(input)
+            }
+            console.log(ouath2ep)
+            form.setAttribute('action', ouath2ep)
+            document.body.appendChild(form)
+            console.log(form)
+            window.location.href = ouath2ep;
+        }
+    </script>
+    
+</html>
