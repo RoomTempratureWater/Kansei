@@ -29,7 +29,7 @@ pip install -r requirements.txt
 ### Supabase
 On Supabase, make a new project and create a table called ```note``` (you can name it anything but you will have to change the name in the ```db.py``` file)
 Make columns as per Schema below:
-![Schema](https://imgur.com/a/iKSyOeR)
+![Schema](https://i.imgur.com/b3E1IqR.png)
 (Note: Extra columns are for new features to be implemented and can be dropped as of now)
 
 Next create a bucket called ```MD_files```
@@ -91,7 +91,9 @@ the ```.env``` file should be inside of ```app/```
 
 ## Screenshots
 
-![WebApp Screenshots](https://imgur.com/a/SUuHrmG)
+![WebApp Screenshots](https://i.imgur.com/OKvbvgB.png)
+![WebApp Screenshots](https://i.imgur.com/5eFVSP1.png)
+![WebApp Screenshots](https://i.imgur.com/6b9cXNl.png)
 
 
 ## Tech Stack
